@@ -8,13 +8,12 @@ class IndexController extends Controller
 {
 	var $token = "562258307:AAF7ljfH87V1jhZ4jGonaLJZfcxdMG41vSs";
 	var $method = "sendMessage";
-	var $chatId = "302569660";
-	var $text = "Привет, кусок мяса";
+	var $chatId = "404022092"; // 
 	
 
 
     //ФУНКЦИЯ ЗАПРОСА К API
-    function getInfo($method, $params)
+    function getTelegramInfo($method, $params)
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -23,17 +22,27 @@ class IndexController extends Controller
         $result = curl_exec($ch);
         curl_close($ch);
 
-        return $info = json_decode($result, true);
+        return $info = json_decode($result);
     }
 
-    function getUpdates(){
-    	$params = [
-			'chat_id' => $this->chatId,
-			'text' => $this->text
-		];
-    	dump("dfbdf");
-    	dump($this->getInfo('sendMessage',[]));
+    function getUpdates(){    	
+    	dump($this->getTelegramInfo('getUpdates',[]));
+    }
 
+
+    function sendMessage(){
+    	$params = [
+			'chat_id' => '404022092',
+			'text' => 'короче как-то так',
+			];
+		dump($this->getTelegramInfo('sendMessage',$params));
+
+    }
+
+
+    public function index(){
+    	$this->getUpdates();
+    	$this->sendMessage();
     }
 
 }

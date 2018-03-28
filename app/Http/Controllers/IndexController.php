@@ -27,22 +27,24 @@ class IndexController extends Controller
 
     function getUpdates(){    	
     	dump($this->getTelegramInfo('getUpdates',[]));
+        $this->sendMessage();
     }
 
 
     function sendMessage(){
+
     	$params = [
 			'chat_id' => '404022092',
-			'text' => 'короче как-то так',
-			];
-		dump($this->getTelegramInfo('sendMessage',$params));
+            'media' => [['type' => 'photo','media' => 'https://sun9-9.userapi.com/c830108/v830108396/aae48/DSO_kTqrCZg.jpg']]
+            ];
+        //dump(http_build_query($params));
+		dump($this->getTelegramInfo('sendMediaGroup',$params));
+
 
     }
-
-
     public function index(){
     	$this->getUpdates();
-    	$this->sendMessage();
+    	
     }
 
 }
